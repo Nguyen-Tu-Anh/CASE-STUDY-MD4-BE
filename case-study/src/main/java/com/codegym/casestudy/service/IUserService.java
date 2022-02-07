@@ -1,9 +1,5 @@
 package com.codegym.casestudy.service;
 
-
-
-
-
 import com.codegym.casestudy.model.Users;
 
 import java.util.List;

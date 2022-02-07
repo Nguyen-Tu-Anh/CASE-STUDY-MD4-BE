@@ -48,18 +48,14 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> register (@Valid @RequestBody SignUpForm signUpForm) {
-        if (userService.existsByUserName(signUpForm.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new ResponseMessage("username_existed"));
+        if(userService.existsByUserName(signUpForm.getUsername())){
+            return new ResponseEntity<>(new ResponseMessage("username_existed"), HttpStatus.OK);
         }
-        if (userService.existsByEmail(signUpForm.getEmail())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new ResponseMessage("email_existed"));
+        if(userService.existsByEmail(signUpForm.getEmail())){
+            return new ResponseEntity<>(new ResponseMessage("email_existed"), HttpStatus.OK);
         }
         if(signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()){
-            signUpForm.setAvatar("#"); //Chỗ này là ảnh của user lúc đăng kí, sẽ gán cho nó 1 cái mặc định
+            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/casemd4-b5188.appspot.com/o/Avatar-Facebook-trắng.jpg?alt=media&token=e8460146-9763-4a7f-bb4e-56148b670434"); //Chỗ này là ảnh của user lúc đăng kí, sẽ gán cho nó 1 cái mặc định
         }
         Users users = new Users(
           signUpForm.getName(),
