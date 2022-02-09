@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +48,7 @@ public class AuthController {
     JwtProvider jwtProvider;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> register (@Valid @RequestBody SignUpForm signUpForm) {
+    public ResponseEntity<?> register(@Valid @RequestBody SignUpForm signUpForm) {
         if (userService.existsByUserName(signUpForm.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -58,25 +59,26 @@ public class AuthController {
                     .badRequest()
                     .body(new ResponseMessage("email_existed"));
         }
-        if(signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()){
-            signUpForm.setAvatar("#"); //Chỗ này là ảnh của user lúc đăng kí, sẽ gán cho nó 1 cái mặc định
+        if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
+            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/uploadfile-16ead.appspot.com/o/d711d03146aafdb1769fd002de912f16.jpg?alt=media&token=7ef43bda-09da-4ad7-bc25-808d54cd18fb"); //Chỗ này là ảnh của user lúc đăng kí, sẽ gán cho nó 1 cái mặc định
         }
         Users users = new Users(
-          signUpForm.getName(),
-          signUpForm.getUsername(),
-          signUpForm.getEmail(),
-          signUpForm.getAvatar(),
-          passwordEncoder.encode(signUpForm.getPassword()));
+                signUpForm.getId(),
+                signUpForm.getName(),
+                signUpForm.getUsername(),
+                signUpForm.getEmail(),
+                signUpForm.getAvatar(),
+                passwordEncoder.encode(signUpForm.getPassword()));
         Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
         strRoles.forEach(role -> {
             switch (role) {
-                case "ADMIN" :
-                    Role smRole = roleService.findByName(RoleName.ADMIN).orElseThrow( ()-> new RuntimeException("Role not found"));
+                case "ADMIN":
+                    Role smRole = roleService.findByName(RoleName.ADMIN).orElseThrow(() -> new RuntimeException("Role not found"));
                     roles.add(smRole);
                     break;
                 default:
-                    Role usRole = roleService.findByName(RoleName.USER).orElseThrow( ()-> new RuntimeException("Role not found"));
+                    Role usRole = roleService.findByName(RoleName.USER).orElseThrow(() -> new RuntimeException("Role not found"));
                     roles.add(usRole);
             }
         });
@@ -85,9 +87,19 @@ public class AuthController {
         return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
     }
 
-    @PostMapping("/signin")
-    public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm){
 
+//    @PostMapping("/updateAdmin")
+//    public ResponseEntity<?> update(@Valid @RequestBody Users user, @AuthenticationPrincipal UserPrinciple userPrinciple) {
+//        Users oldUser = userService.findByUserName(userPrinciple.getUsername()).get();
+//        if(user.getPassword() == null) {
+//
+//        }
+//        userService.save(user);
+//        return new ResponseEntity<>(new ResponseMessage("yes"), HttpStatus.OK);
+//    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword())
         );
