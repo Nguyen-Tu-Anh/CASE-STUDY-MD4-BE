@@ -9,4 +9,6 @@ public interface ICartItemService {
     List<CartItem> listCartItem (Users users);
     void addProduct(Long productId, double quantity, Users users);
     void deleteCartItem(Long id);
+    void updateQuantity(double quantity, Long productId, Long userId);
+    void deleteCartItemLessThanZero(Long productId, Users users);
 }

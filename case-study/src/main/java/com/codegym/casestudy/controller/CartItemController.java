@@ -44,5 +44,17 @@ public class CartItemController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    @GetMapping("/update/{pid}/{quantity}")
+    public ResponseEntity<?> updateProductQuantity(@PathVariable("quantity") double quantity,
+                                                   @PathVariable("pid") Long productId,
+                                                   @AuthenticationPrincipal UserPrinciple userPrinciple) {
+        Users users = userService.findByUserName(userPrinciple.getUsername()).get();
+        if (quantity > 0) {
+            cartItemService.updateQuantity(quantity, productId, users.getId());
+            return showCartItem(userPrinciple);
+        } else {
+            cartItemService.deleteCartItemLessThanZero(productId, users);
+            return showCartItem(userPrinciple);
+        }
+    }
 }

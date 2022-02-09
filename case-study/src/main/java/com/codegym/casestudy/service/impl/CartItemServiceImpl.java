@@ -9,6 +9,9 @@ import com.codegym.casestudy.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,6 +21,9 @@ public class CartItemServiceImpl implements ICartItemService {
 
     @Autowired
     IProductService productService;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Override
     public List<CartItem> listCartItem(Users users) {
@@ -44,5 +50,19 @@ public class CartItemServiceImpl implements ICartItemService {
     @Override
     public void deleteCartItem(Long id) {
         cartItemRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateQuantity(double quantity, Long productId, Long userId) {
+        entityManager.joinTransaction();
+        cartItemRepository.updateQuantity(quantity, productId, userId);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCartItemLessThanZero(Long productId, Users users) {
+        entityManager.joinTransaction();
+        cartItemRepository.deleteCartItemLessThanZero(productId, users.getId());
     }
 }

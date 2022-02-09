@@ -18,14 +18,11 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
     @Size(min = 3, max = 50)
     private String nameProduct;
 
-    @NotBlank
     private double price;
 
-    @NotBlank
     private double quantity;
 
     @Lob
