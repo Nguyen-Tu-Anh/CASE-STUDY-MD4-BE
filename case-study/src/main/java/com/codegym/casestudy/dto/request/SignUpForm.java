@@ -6,6 +6,7 @@ import java.util.Set;
 
 @Data
 public class SignUpForm {
+    private Long id;
     private String name;
     private String username;
     private String password;

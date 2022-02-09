@@ -1,2 +1,8 @@
-package com.codegym.casestudy.dto.request;public class UserEditForm {
+package com.codegym.casestudy.dto.request;
+
+import lombok.Data;
+
+@Data
+public class UserEditForm {
+
 }

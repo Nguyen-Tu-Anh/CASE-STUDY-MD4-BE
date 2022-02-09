@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @Component
 public class JwtEntryPoint implements AuthenticationEntryPoint {
-    private static final Logger logger = LoggerFactory.getLogger(com.example.CaseModule4.security.jwt.JwtTokenFilter.class);
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         logger.error("Unauthorized error Message {}", authException.getMessage());

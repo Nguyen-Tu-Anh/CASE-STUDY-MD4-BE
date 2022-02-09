@@ -5,6 +5,8 @@ import com.codegym.casestudy.model.Users;
 import com.codegym.casestudy.repository.IUserRepositoty;
 import com.codegym.casestudy.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,13 +56,19 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<Users> findAll() {
-        return userRepositoty.findAll();
+    public Page<Users> findAll(Pageable pageable) {
+        return userRepositoty.findAll(pageable);
     }
+
 
     @Override
     public List<Users> findUsersByIdIsNotLike(Long id) {
         return userRepositoty.findUsersByIdIsNotLike(id);
+    }
+
+    @Override
+    public int countUsers() {
+        return userRepositoty.countUsers();
     }
 
 }
