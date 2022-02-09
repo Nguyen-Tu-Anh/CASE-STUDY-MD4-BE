@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class ProductServiceImpl implements IProductService {
     @Autowired
@@ -36,5 +39,15 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
+    }
+    @Override
+    public Page<Product> findAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+
+    @Override
+    public int countProducts() {
+        return productRepository.countProducts();
     }
 }
