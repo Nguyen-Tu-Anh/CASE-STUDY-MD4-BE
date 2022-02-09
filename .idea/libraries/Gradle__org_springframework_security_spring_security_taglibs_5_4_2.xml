@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: org.springframework.security:spring-security-taglibs:5.4.2">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-taglibs/5.4.2/584f1ac446253c38d9fce262bb6eaa5e0a86133e/spring-security-taglibs-5.4.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.security/spring-security-taglibs/5.4.2/e07926ab8355a5f7afe113a23f0e1c5b84b5e4eb/spring-security-taglibs-5.4.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
