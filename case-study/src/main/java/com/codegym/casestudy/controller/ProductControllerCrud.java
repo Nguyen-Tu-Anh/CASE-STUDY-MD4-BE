@@ -83,4 +83,9 @@ public class ProductControllerCrud {
     public List<Category> findAll() {
         return categoryService.findAllCategory();
     }
+
+    @GetMapping("/search/{nameProduct}")
+    public ResponseEntity<?> findAllByNameProduct(@PathVariable String nameProduct){
+        return new ResponseEntity<>(productService.findAllByNameProductContaining(nameProduct),HttpStatus.OK);
+    }
 }

@@ -10,4 +10,6 @@ public interface IProductRepository extends PagingAndSortingRepository<Product, 
     List<Product> findProductByCategory_Id(Long id);
     @Query(nativeQuery = true, value = "select count(id) from product")
     int countProducts();
+
+    List<Product> findAllByNameProductContaining(String nameProduct);
 }

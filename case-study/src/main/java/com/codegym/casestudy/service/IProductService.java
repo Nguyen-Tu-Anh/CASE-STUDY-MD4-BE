@@ -16,4 +16,6 @@ public interface IProductService {
     
     Page<Product> findAll(Pageable pageable);
     int countProducts();
+    List<Product> findAllByNameProductContaining(String nameProduct);
+
 }

@@ -50,4 +50,9 @@ public class ProductServiceImpl implements IProductService {
     public int countProducts() {
         return productRepository.countProducts();
     }
+
+    @Override
+    public List<Product> findAllByNameProductContaining(String nameProduct) {
+        return productRepository.findAllByNameProductContaining(nameProduct);
+    }
 }
