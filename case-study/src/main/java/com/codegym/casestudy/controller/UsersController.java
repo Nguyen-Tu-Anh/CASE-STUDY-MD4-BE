@@ -65,6 +65,7 @@ public class UsersController {
             users.setAvatar(oldUser.get().getAvatar());
         }
         users.setId(id);
+        users.setRoles(oldUser.get().getRoles());
         userService.save(users);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
